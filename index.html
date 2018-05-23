@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Coffeeplace Generator</title>
+	<link rel="stylesheet" type="text/css" href="main.css">
+	<link rel="stylesheet" type="text/css" href="reset.css">
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDol-6UvmVIdCJNxzd217-UVodzvCi7LVU&libraries=places"></script>
+	<script type="text/javascript" src="index.js"></script>
+    </script>
+</head>
+<body>
+	<header role="banner">
+		<h1>
+			Coffeeplace Generator
+		</h1>
+	</header>
+	<section class="input-box">
+		<form class="js-form home-page">
+			<input type="text" class="js-query address" id="address" placeholder="Enter an address">
+			<button type="submit">Submit</button>
+			<p>Find cafes nearby with a click.</p>
+		</form>
+	</section>
+	<main role="main">
+		
+		<section class="weather-wrapper">
+			<div class="weather-container"></div>
+		</section>
+		<div class="map-container" id="map"></div>
+		<section>
+			<div class="coffee-listings">
+				<ul>
+					
+				</ul>
+			</div>
+		</section>
+	</main>
+</body>
+</html>
