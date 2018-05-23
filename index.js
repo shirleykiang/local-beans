@@ -1,17 +1,19 @@
 let map;
 let service;
-let infowindow;
 let geocoder;
-
+let cityname;
+let statename;
 
 function renderNewForm() {
 	//this function will be responsible for generating new input box on results page 
 	$('.input-box').html(`
 		<form class="js-form results-page">
 			<input type="text" class="js-query address" id="address" placeholder="Enter an address">
-			<button type="submit">Submit</button>
+			<input type="submit">
 		</form>
 		`)
+
+	watchSubmit();
 }
 
 function getDataFromWeather(zipCode, callback) {
@@ -29,21 +31,70 @@ function getDataFromWeather(zipCode, callback) {
 function displayWeatherSearchData(data) {
 	//this function will be responsible for displaying weather data
 	let fahr_temp = Math.round((data.main.temp - 273.15) * 9/5 + 32);
-	$('.weather-container').html(`
-		The weather today is ${fahr_temp} F.
-		`)
+	if (fahr_temp < 40) {
+		
+		$('.weather-container').html(`
+		The weather today is ${fahr_temp} F. Best stay inside.
+		`);
+
+
+	} else if (fahr_temp >= 40 && fahr_temp < 60) {
+		
+		$('.weather-container').html(`
+		The weather today is a bit chilly at ${fahr_temp} F. Perfect for some nice hot chocolate.
+		`);
+
+	} else if (fahr_temp >= 60) {
+
+		$('.weather-container').html(`
+		The weather today is ${fahr_temp} F. Perfect for working at a cafe.
+		`);
+	
+	}
 }
 
 function getLatLng(address) {
 	geocoder = new google.maps.Geocoder();
+
+	let zipcode;
+	let cityname;
+	let statename;
+
 	geocoder.geocode( { 'address': address}, function(results, status) {
 		if (status == 'OK') {
+			console.log(`this is the geocode object:`);
+			console.log(results[0]);
 			let latLng = results[0].geometry.location;
       		getDataFromMap(latLng);
-      		let zipcode = results[0].address_components[7].long_name;
-      		console.log(zipcode);
-      		getDataFromWeather(zipcode, displayWeatherSearchData);
-			console.log(`getLatLng ran and the coordinates are: ${latLng}`);
+
+      		//find zipcode
+      		for (let i=0; i<results[0].address_components.length; i++) {
+      			if (results[0].address_components[i].types[0] === "postal_code") {
+      				zipcode = results[0].address_components[i].short_name;
+      				console.log(`This is the zipcode: ${zipcode}`);
+      			}
+      		}
+
+      		for (let i=0; i<results[0].address_components.length; i++) {
+      			if (results[0].address_components[i].types[0] === "locality") {
+      				cityname = results[0].address_components[i].short_name;
+      				console.log(`This is the city: ${cityname}`);
+      			}
+      		}
+
+      		for (let i=0; i<results[0].address_components.length; i++) {
+      			if (results[0].address_components[i].types[0] === "administrative_area_level_1") {
+      				statename = results[0].address_components[i].short_name;
+      				console.log(`This is the state: ${statename}`);
+      			}
+      		}
+      	
+      		if (zipcode && cityname && statename) {
+      			$('.citystate-container').html(`Current Location: ${cityname}, ${statename}`);
+      			getDataFromWeather(zipcode, displayWeatherSearchData);
+      		} else {
+      			$('.citystate-container').html('Your search returned no results. Please try again.')
+      		}
 
 		} else {
 			console.log('Geocode was not successful for the following reason: ' + status);
@@ -58,22 +109,37 @@ function getDataFromMap(latLang) {
 
 	console.log('function getDataFromMap ran');
 	let center = latLang; // google HQ 
-  console.log(latLang);
+  	console.log(latLang);
 	map = new google.maps.Map(document.getElementById('map'), {
 		center: center,
-		zoom: 11
+		zoom: 13
 		//zoomControl: true,
 		//zoomControlOptions: {
 			//position: google.maps.ControlPosition.LEFT_CENTER}
 		});
 
+
+	current_marker = new google.maps.Marker({
+		map: map,
+		position: center,
+		icon: 'http://maps.google.com/mapfiles/kml/paddle/blu-stars.png'
+	})
+
+	let current_infowindow = new google.maps.InfoWindow({
+		content: `Your location`
+	});
+
+	google.maps.event.addListener(current_marker, 'click', function() {
+			current_infowindow.open(map, this);
+			map.setZoom(16);
+			map.panTo(current_marker.position)
+		});
+
 	let request = {
 		location: center,
-		radius: 8047, // about 5 mi radius
+		radius: 7600, // in meters, equiv to about 5 mi radius
 		type: ['cafe']
 	};
-
-	infowindow = new google.maps.InfoWindow();
 
 	service = new google.maps.places.PlacesService(map);
 	service.nearbySearch(request, callback);
@@ -113,10 +179,9 @@ function callback(results,status) {
 }
 
 
-// each place is a cafe result
 function createMarker(place){
 	console.log('function createMarker ran');
-	let placeLoc = place.geometry.location; // does not return object
+	let placeLoc = place.geometry.location;
 	let marker = new google.maps.Marker({
 		map: map,
 		position: placeLoc 
@@ -124,23 +189,19 @@ function createMarker(place){
 
 	let infowindow = new google.maps.InfoWindow( {
 		content: `<div class="marker">${place.name} <br> ${place.vicinity}</div>`
-		// https://developers.google.com/maps/documentation/javascript/infowindows
 	});
 
 	google.maps.event.addListener(marker, 'click', function() {
-			//infowindow.setContent(place.name);
 			console.log(map);
 			console.log(placeLoc);
 			infowindow.open(map, this);
-			map.setZoom(15);
+			map.setZoom(16);
 			map.panTo(placeLoc)
 		});
 	};
 
 
 function watchSubmit() {
-	// this function will be responsible for generating playlist and showtimes
-	// on screen when user submits input into search box
 
 	$('.js-form').on("submit", function() {
 		event.preventDefault();
@@ -148,6 +209,8 @@ function watchSubmit() {
     	const query = queryTarget.val();
 		console.log(`user has submitted ${query}.`);
     	getLatLng(query);
+    	$('.citystate-container').html('');
+    	$('.weather-container').html('');
   		renderNewForm();
   		});
 }
