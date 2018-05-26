@@ -1,38 +1,46 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Coffeeplace Generator</title>
-	<link rel="stylesheet" type="text/css" href="main.css">
+
+	<meta name="viewport" content="width=device-width">
+	<title>Local Beans</title>
+	<link href="https://fonts.googleapis.com/css?family=Karla:400,700|Montserrat:400,800" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="reset.css">
-	<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+	<link rel="stylesheet" type="text/css" href="main.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDol-6UvmVIdCJNxzd217-UVodzvCi7LVU&libraries=places"></script>
 	<script type="text/javascript" src="index.js"></script>
-    </script>
 </head>
 <body>
-	<header role="banner">
-		<h1>
-			Coffeeplace Generator
-		</h1>
-	</header>
-	<section class="input-box">
-		<form class="js-form home-page">
-			<input type="text" class="js-query address" id="address" placeholder="Enter an address, e.g. 123 Coffee Place, San Jose CA 95117">
-			<input type="submit">
-			<p>Find cafes nearby with a click.</p>
-		</form>
-	</section>
+  <div class="home-page">
+	  <header role="banner">
+		  <h1>
+			Local Beans
+		  </h1>
+	  </header>
+	  <p class="home-text">Find a nearby coffee shop today.</p>
+    <section class="input-box">
+      <form class="js-form home-page">
+        <div class="form-style">
+        <input type="text" class="js-address home" id="address" placeholder="Type in your address.">
+        <input type="image" src="local-beans-search-button-01.png" class="search-submit" alt="submit">
+        </div>
+      </form>
+	  </section>
+	</div>
+
 	<main role="main">
-		
-		<section class="weather-wrapper">
-			<div class="citystate-container"></div>
-			<div class="weather-container"></div>
-				
-			</p>
-		</section>
+		<div class="page-top">
+      <section class="new-input-box">
+      </section>
+      <section class="weather-wrapper">
+        <div class="weather-container"></div>
+        <div class="citystate-container"></div>
+      </section>
+    </div>
 		<div class="map-container" id="map"></div>
-		<section>
+		<section class="search-results">
+      <h2 class="results-header"></h2>
 			<div class="coffee-listings">
 				<ul>
 					

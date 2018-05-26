@@ -1,17 +1,228 @@
-
-
-#map {
-	height: 1000px;
-}
-
-
- html, body {
+html, body {
         height: 100%;
         margin: 0;
         padding: 0;
       }
 
+body {
+	width: 80%;
+  	margin: -5.5em 0px auto;
+  	padding: 2.5em;
+}
+
+html {
+  background-image: url(https://res.cloudinary.com/shirleykiang/image/upload/v1527196098/local_beans_background.jpg);
+ 	background-repeat: no-repeat;
+ -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+h1 {
+	font-family: 'Montserrat', sans-serif;
+	font-weight: 800;
+	color: #f0f0f1;
+	font-size: 4.7em;
+	letter-spacing: 7px;
+	margin-top: 3em;
+	margin-bottom: 0.2em;
+  line-height: 0.95;
+}
+
+.home-text {
+	font-family: 'Montserrat', sans-serif;
+	font-weight: 400;
+	color: #f0f0f1;
+	font-size: 1.6em;
+	letter-spacing: 1px;
+	margin-bottom: 1.6em;
+	line-height: 1.3em;
+}
+
+form {
+	display: block;
+}
+.new-input-box {
+  width: 50%
+}
+
+.input-box {
+  width:70%;
+  margin: 0 auto;
+}
+
+.form-style {
+	position: relative;
+	display: inline-block;
+	height: 2.5em;
+	line-height: 2.5em;
+	width: 100%;
+}
+
+.js-address.home {
+	font-family: 'Karla', sans-serif;
+	font-weight: 400;
+  display: inline-block;
+	border: 0;
+  outline: 0;
+  background: transparent;
+  border-bottom: 1px solid #f0f0f1;
+	height: 100%;
+	width: 95%;
+	vertical-align: top;
+
+	/*styling for input text*/
+	font-family: 'Karla', sans-serif;
+	font-weight: 400;
+	font-size: 3em;
+	color: rgb(240, 240, 241, 0.5);
+}
+
+.search-submit {
+	/*gotta change the size of this search icon...*/
+  	border: 0;
+  	height: 15px; /*will change*/
+  	margin-left: -2.7em;
+  	display: inline-block;
+  	position: relative;
+  	right: 0;
+  	bottom: 0;
+  	height: 70%;
+  	vertical-align: middle;
+  	cursor: default;
+}
+
+.js-address.home::placeholder {
+	font-family: 'Karla', sans-serif;
+	font-weight: 400;
+	font-size: 0.6em;
+	color: rgb(240, 240, 241, 0.5);
+	/* code to center placeholder text*/
+}
+
+.js-address.results::placeholder {
+	font-size: 0.65em;
+}
+
+.submit-container {
+	display: inline-block;
+	height: 2.1em;
+}
+
+h1, .home-text, form {
+  text-align: center;
+}
+
+/*search form on results page*/
+.js-address.results {
+  font-family: 'Karla', sans-serif;
+	font-weight: 400;
+  display: inline-block;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  border-bottom: 1px solid black;
+	height: 100%;
+	width: 100%;
+	vertical-align: top;
+
+	/*styling for input text*/
+	font-family: 'Karla', sans-serif;
+	font-weight: 400;
+	font-size: 3em;
+	color: black;
+}
 
 .map-container {
-	height: 1000px;
+	height: 500px;
 }
+
+.weather-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+main {
+
+  box-sizing: border-box;
+}
+
+.page-top {
+  width: 100%;
+  display: inline-flex;
+  justify-content: space-between;
+  margin: 2em 0;
+}
+
+
+.citystate-container {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+  font-size: 0.5em;
+  text-transform: uppercase;
+}
+
+.weather-container {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800;
+  font-size: 1.9em
+  }
+
+.results-header {
+  font-family: 'Karla', sans-serif;
+  font-weight: 800;
+  font-size: 2em;
+  margin-top: 2.1em;
+  margin-bottom: 1.4em;
+  letter-spacing: 1.5px;
+  line-height: 1.2 em;
+}
+.search-results {
+  text-align: center;
+}
+
+.coffee-listings {
+  list-style: none;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.listing {
+  margin-bottom: 1em;
+  text-align: center;
+}
+
+.place-name {
+  font-weight: 800;
+  font-size: 1em;
+  line-height: 1.3em;
+}
+
+.place-address {
+  font-weight: 400;
+  font-size: 0.85em;
+}
+
+.hidden-submit {
+  display: none;
+}
+
+@media screen and (min-width: 696px) {
+  
+  body {
+  	margin: -2em 0px auto;
+  }
+
+.home-text {
+	font-size: 2.1em;
+  letter-spacing: 4px;
+}
+
+
+@media screen and (min-width: 1024px) {
+
+
+}
+

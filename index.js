@@ -6,10 +6,14 @@ let statename;
 
 function renderNewForm() {
 	//this function will be responsible for generating new input box on results page 
-	$('.input-box').html(`
+  $('.home-page').empty();
+  $('html').css({'background-image': 'none', 'background-color': '#fbfbfb'});
+	$('.new-input-box').html(`
 		<form class="js-form results-page">
-			<input type="text" class="js-query address" id="address" placeholder="Enter an address">
-			<input type="submit">
+			<div class="form-style">
+			<input type="text" class="js-address results" id="address" placeholder="Search">
+			<input type="submit" class="hidden-submit">
+			</div>
 		</form>
 		`)
 
@@ -33,23 +37,22 @@ function displayWeatherSearchData(data) {
 	let fahr_temp = Math.round((data.main.temp - 273.15) * 9/5 + 32);
 	if (fahr_temp < 40) {
 		
-		$('.weather-container').html(`
-		The weather today is ${fahr_temp} F. Best stay inside.
-		`);
+		$('.weather-container').html(`${fahr_temp}&#176; F`);
 
+    $('.results-header').html(`Stay warm with some hot chocolate.`);
 
 	} else if (fahr_temp >= 40 && fahr_temp < 60) {
 		
-		$('.weather-container').html(`
-		The weather today is a bit chilly at ${fahr_temp} F. Perfect for some nice hot chocolate.
-		`);
+		$('.weather-container').html(`${fahr_temp}&#176; F`);
+
+    $('.results-header').html(`Perfect weather for some hot chocolate.`)
 
 	} else if (fahr_temp >= 60) {
 
-		$('.weather-container').html(`
-		The weather today is ${fahr_temp} F. Perfect for working at a cafe.
-		`);
+		$('.weather-container').html(`${fahr_temp}&#176; F`);
 	
+    $('.results-header').html(`It's a beautiful day to go cafe hopping.`)
+
 	}
 }
 
@@ -90,7 +93,7 @@ function getLatLng(address) {
       		}
       	
       		if (zipcode && cityname && statename) {
-      			$('.citystate-container').html(`Current Location: ${cityname}, ${statename}`);
+      			$('.citystate-container').html(`${cityname}, ${statename}`);
       			getDataFromWeather(zipcode, displayWeatherSearchData);
       		} else {
       			$('.citystate-container').html('Your search returned no results. Please try again.')
@@ -131,7 +134,7 @@ function getDataFromMap(latLang) {
 
 	google.maps.event.addListener(current_marker, 'click', function() {
 			current_infowindow.open(map, this);
-			map.setZoom(16);
+			map.setZoom(18);
 			map.panTo(current_marker.position)
 		});
 
@@ -147,35 +150,37 @@ function getDataFromMap(latLang) {
 
 
 //responsible for moving the map center to selected cafe result 
-// function handleItemMapView() {
-// 	//console.log('handleItemMapView ran');
-// 	$('.coffee-listings').on('click', '.listing', function() {
-// 		console.log('clicking on a listing right now');
-// 		let position = $(this).data('lnglat');
-// 		let final_position = position.substr(1).slice(0, -1);
-// 		console.log(map);
-// 		map.setZoom(15);
-		// let latlng = new google.maps.LatLng(final_position);
-		// console.log(latlng);
-		//map.panTo(latlng);
-// 	});
-// }
+function handleItemMapView() {
+	//console.log('handleItemMapView ran');
+	$('.coffee-listings').on('click', '.listing', function() {
+		//console.log('clicking on a listing right now');
+		let this_lat = $(this).data('lat');
+		let this_lng = $(this).data('lng');
+		//console.log(`lat: ${this_lat} lng: ${this_lng}`);
+		map.setZoom(18);
+		let latlng = new google.maps.LatLng(this_lat, this_lng);
+		map.panTo(latlng);
 
-function callback(results,status) {
+	});
+}
+
+function callback(results, status) {
 	console.log('function callback ran');
 	let htmlListings = '';
 	if(status == google.maps.places.PlacesServiceStatus.OK) {
 		for (let i=0; i < results.length; i++) {
 			let place = results[i];
+			console.log(results[i]);
 			createMarker(place);
-			htmlListings += `<li><div class='listing' data-lnglat='${place.geometry.location}'>;
-			${place.name} @ ${place.vicinity}</div></li>`;
+			htmlListings += `<li><div class='listing' data-lat='${place.geometry.location.lat()}' 
+			data-lng='${place.geometry.location.lng()}'><span class="place-name">
+			${place.name}</span> <br> <span class="place-address">${place.vicinity}</span></div></li>`;
 		}
 	};
 
 	$('.coffee-listings').html(htmlListings);
 
-	//handleItemMapView();
+	handleItemMapView();
 }
 
 
@@ -192,12 +197,13 @@ function createMarker(place){
 	});
 
 	google.maps.event.addListener(marker, 'click', function() {
-			console.log(map);
-			console.log(placeLoc);
+			// console.log(map);
+			// console.log(placeLoc);
 			infowindow.open(map, this);
 			map.setZoom(16);
 			map.panTo(placeLoc)
 		});
+
 	};
 
 
