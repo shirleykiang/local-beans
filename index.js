@@ -6,10 +6,10 @@ let statename;
 
 function renderNewForm() {
 	//this function will be responsible for generating new input box on results page 
-  $('.home-page').empty();
-  $('html').css({'background-image': 'none', 'background-color': '#fbfbfb'});
+
+	$('.home-page').empty();
 	$('.new-input-box').html(`
-		<form class="js-form results-page">
+		<form class="js-form results-page" aria-live="assertive">
 			<div class="form-style">
 			<input type="text" class="js-address results" id="address" placeholder="Search">
 			<input type="submit" class="hidden-submit">
@@ -18,6 +18,11 @@ function renderNewForm() {
 		`)
 
 	watchSubmit();
+}
+
+function changeStyling() {
+  $('html').css({'background-image': 'none', 'background-color': '#fbfbfb'});
+  $('h2').prop('hidden',false);
 }
 
 function getDataFromWeather(zipCode, callback) {
@@ -218,6 +223,7 @@ function watchSubmit() {
     	$('.citystate-container').html('');
     	$('.weather-container').html('');
   		renderNewForm();
+  		changeStyling();
   		});
 }
 

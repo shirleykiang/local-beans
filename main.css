@@ -192,17 +192,18 @@ main {
 .listing {
   margin-bottom: 1em;
   text-align: center;
+  cursor: pointer;
 }
 
 .place-name {
   font-weight: 800;
-  font-size: 1em;
+  font-size: 1.1em;
   line-height: 1.3em;
 }
 
 .place-address {
   font-weight: 400;
-  font-size: 0.85em;
+  font-size: 0.95em;
 }
 
 .hidden-submit {

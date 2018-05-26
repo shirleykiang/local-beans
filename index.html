@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 
 	<meta name="viewport" content="width=device-width">
@@ -18,9 +18,9 @@
 			Local Beans
 		  </h1>
 	  </header>
-	  <p class="home-text">Find a nearby coffee shop today.</p>
-    <section class="input-box">
-      <form class="js-form home-page">
+	  <p class="home-text" aria-live="polite">Find a nearby coffee shop today.</p>
+    <section role="region" class="input-box">
+      <form class="js-form home-page" aria-live="assertive">
         <div class="form-style">
         <input type="text" class="js-address home" id="address" placeholder="Type in your address.">
         <input type="image" src="local-beans-search-button-01.png" class="search-submit" alt="submit">
@@ -31,19 +31,18 @@
 
 	<main role="main">
 		<div class="page-top">
-      <section class="new-input-box">
+      <section role="region" class="new-input-box">
       </section>
-      <section class="weather-wrapper">
+      <section role="region" class="weather-wrapper">
         <div class="weather-container"></div>
         <div class="citystate-container"></div>
       </section>
     </div>
 		<div class="map-container" id="map"></div>
-		<section class="search-results">
-      <h2 class="results-header"></h2>
-			<div class="coffee-listings">
+		<section role="region" class="search-results">
+      <h2 class="results-header" aria-live="polite" hidden></h2>
+			<div class="coffee-listings" aria-live="polite">
 				<ul>
-					
 				</ul>
 			</div>
 		</section>
