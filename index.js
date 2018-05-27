@@ -4,29 +4,15 @@ let geocoder;
 let cityname;
 let statename;
 
-function renderNewForm() {
-	//this function will be responsible for generating new input box on results page 
 
-	$('.home-page').empty();
-	$('.new-input-box').html(`
-		<form class="js-form results-page" aria-live="assertive">
-			<div class="form-style">
-			<input type="text" class="js-address results" id="address" placeholder="Search">
-			<input type="submit" class="hidden-submit">
-			</div>
-		</form>
-		`)
-
-	watchSubmit();
-}
-
+//changes css styling in response to form submission
 function changeStyling() {
   $('html').css({'background-image': 'none', 'background-color': '#fbfbfb'});
   $('h2').prop('hidden',false);
 }
 
+//grabs weather data from API based on address user inputted
 function getDataFromWeather(zipCode, callback) {
-	// this function will be responsible for generating weather data
 	const query = {
 		zip: zipCode,
 		APPID: 'e9a2333fea7d3114a9c478f3d5bef35e'
@@ -37,8 +23,8 @@ function getDataFromWeather(zipCode, callback) {
 }
 
 
+//displays data grabbed from weather API
 function displayWeatherSearchData(data) {
-	//this function will be responsible for displaying weather data
 	let fahr_temp = Math.round((data.main.temp - 273.15) * 9/5 + 32);
 	if (fahr_temp < 40) {
 		
@@ -61,6 +47,7 @@ function displayWeatherSearchData(data) {
 	}
 }
 
+//generates the geocode for address entered by user
 function getLatLng(address) {
 	geocoder = new google.maps.Geocoder();
 
@@ -70,30 +57,24 @@ function getLatLng(address) {
 
 	geocoder.geocode( { 'address': address}, function(results, status) {
 		if (status == 'OK') {
-			console.log(`this is the geocode object:`);
-			console.log(results[0]);
 			let latLng = results[0].geometry.location;
       		getDataFromMap(latLng);
 
-      		//find zipcode
       		for (let i=0; i<results[0].address_components.length; i++) {
-      			if (results[0].address_components[i].types[0] === "postal_code") {
+      			if (results[0].address_components[i].types[0] === 'postal_code') {
       				zipcode = results[0].address_components[i].short_name;
-      				console.log(`This is the zipcode: ${zipcode}`);
       			}
       		}
 
       		for (let i=0; i<results[0].address_components.length; i++) {
-      			if (results[0].address_components[i].types[0] === "locality") {
+      			if (results[0].address_components[i].types[0] === 'locality') {
       				cityname = results[0].address_components[i].short_name;
-      				console.log(`This is the city: ${cityname}`);
       			}
       		}
 
       		for (let i=0; i<results[0].address_components.length; i++) {
-      			if (results[0].address_components[i].types[0] === "administrative_area_level_1") {
+      			if (results[0].address_components[i].types[0] === 'administrative_area_level_1') {
       				statename = results[0].address_components[i].short_name;
-      				console.log(`This is the state: ${statename}`);
       			}
       		}
       	
@@ -106,26 +87,19 @@ function getLatLng(address) {
 
 		} else {
 			console.log('Geocode was not successful for the following reason: ' + status);
-			// some msg displayed prompting user to re-enter address
+			$('.results-header').html('Your search returned no results. Please try again.')
 		}
 	})
 }
 
 
+//this function will be responsible for generating map data 
 function getDataFromMap(latLang) {
-	//this function will be responsible for generating map data 
-
-	console.log('function getDataFromMap ran');
-	let center = latLang; // google HQ 
-  	console.log(latLang);
+	let center = latLang; 
 	map = new google.maps.Map(document.getElementById('map'), {
 		center: center,
 		zoom: 13
-		//zoomControl: true,
-		//zoomControlOptions: {
-			//position: google.maps.ControlPosition.LEFT_CENTER}
 		});
-
 
 	current_marker = new google.maps.Marker({
 		map: map,
@@ -145,7 +119,7 @@ function getDataFromMap(latLang) {
 
 	let request = {
 		location: center,
-		radius: 7600, // in meters, equiv to about 5 mi radius
+		radius: 7600,
 		type: ['cafe']
 	};
 
@@ -156,12 +130,9 @@ function getDataFromMap(latLang) {
 
 //responsible for moving the map center to selected cafe result 
 function handleItemMapView() {
-	//console.log('handleItemMapView ran');
 	$('.coffee-listings').on('click', '.listing', function() {
-		//console.log('clicking on a listing right now');
 		let this_lat = $(this).data('lat');
 		let this_lng = $(this).data('lng');
-		//console.log(`lat: ${this_lat} lng: ${this_lng}`);
 		map.setZoom(18);
 		let latlng = new google.maps.LatLng(this_lat, this_lng);
 		map.panTo(latlng);
@@ -169,16 +140,15 @@ function handleItemMapView() {
 	});
 }
 
+// callback func for google maps api nearby search
 function callback(results, status) {
-	console.log('function callback ran');
 	let htmlListings = '';
 	if(status == google.maps.places.PlacesServiceStatus.OK) {
 		for (let i=0; i < results.length; i++) {
 			let place = results[i];
-			console.log(results[i]);
 			createMarker(place);
-			htmlListings += `<li><div class='listing' data-lat='${place.geometry.location.lat()}' 
-			data-lng='${place.geometry.location.lng()}'><span class="place-name">
+			htmlListings += `<li><div class="listing" data-lat="${place.geometry.location.lat()}" 
+			data-lng="${place.geometry.location.lng()}"><span class="place-name">
 			${place.name}</span> <br> <span class="place-address">${place.vicinity}</span></div></li>`;
 		}
 	};
@@ -188,9 +158,8 @@ function callback(results, status) {
 	handleItemMapView();
 }
 
-
+// creates marker for each result generated from google place search
 function createMarker(place){
-	console.log('function createMarker ran');
 	let placeLoc = place.geometry.location;
 	let marker = new google.maps.Marker({
 		map: map,
@@ -202,23 +171,31 @@ function createMarker(place){
 	});
 
 	google.maps.event.addListener(marker, 'click', function() {
-			// console.log(map);
-			// console.log(placeLoc);
 			infowindow.open(map, this);
 			map.setZoom(16);
 			map.panTo(placeLoc)
 		});
-
 	};
 
+//generates new input box on results page 
+function renderNewForm() {
+	$('.home-page').empty();
+	$('.new-input-box').html(`
+		<form class="js-form results-page" aria-live="assertive">
+			<div class="form-style">
+			<input type="text" class='js-address results' id="address" placeholder="Search">
+			<input type="submit" class="hidden-submit">
+			</div>
+		</form>
+		`)
+	watchSubmit();
+}
 
 function watchSubmit() {
-
-	$('.js-form').on("submit", function() {
+	$('.js-form').on('submit', function() {
 		event.preventDefault();
 		const queryTarget = $(event.currentTarget).find('#address');
     	const query = queryTarget.val();
-		console.log(`user has submitted ${query}.`);
     	getLatLng(query);
     	$('.citystate-container').html('');
     	$('.weather-container').html('');

@@ -1,3 +1,12 @@
+html {
+ 	background-image: url(https://res.cloudinary.com/shirleykiang/image/upload/v1527196098/local_beans_background.jpg);
+ 	background-repeat: no-repeat;
+ 	background-size: cover;
+	-webkit-background-size: cover;
+ 	-moz-background-size: cover;
+ 	-o-background-size: cover;
+}
+
 html, body {
         height: 100%;
         margin: 0;
@@ -10,15 +19,6 @@ body {
   	padding: 2.5em;
 }
 
-html {
-  background-image: url(https://res.cloudinary.com/shirleykiang/image/upload/v1527196098/local_beans_background.jpg);
- 	background-repeat: no-repeat;
- -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-}
-
 h1 {
 	font-family: 'Montserrat', sans-serif;
 	font-weight: 800;
@@ -27,7 +27,7 @@ h1 {
 	letter-spacing: 7px;
 	margin-top: 3em;
 	margin-bottom: 0.2em;
-  line-height: 0.95;
+	line-height: 0.95;
 }
 
 .home-text {
@@ -43,13 +43,14 @@ h1 {
 form {
 	display: block;
 }
+
 .new-input-box {
-  width: 50%
+	width: 50%
 }
 
 .input-box {
-  width:70%;
-  margin: 0 auto;
+	width:70%;
+	margin: 0 auto;
 }
 
 .form-style {
@@ -63,26 +64,23 @@ form {
 .js-address.home {
 	font-family: 'Karla', sans-serif;
 	font-weight: 400;
-  display: inline-block;
+	display: inline-block;
 	border: 0;
-  outline: 0;
-  background: transparent;
-  border-bottom: 1px solid #f0f0f1;
+	outline: 0;
+	background: transparent;
+	border-bottom: 1px solid #f0f0f1;
 	height: 100%;
 	width: 95%;
 	vertical-align: top;
-
-	/*styling for input text*/
 	font-family: 'Karla', sans-serif;
 	font-weight: 400;
 	font-size: 3em;
 	color: rgb(240, 240, 241, 0.5);
 }
 
+
 .search-submit {
-	/*gotta change the size of this search icon...*/
   	border: 0;
-  	height: 15px; /*will change*/
   	margin-left: -2.7em;
   	display: inline-block;
   	position: relative;
@@ -98,7 +96,6 @@ form {
 	font-weight: 400;
 	font-size: 0.6em;
 	color: rgb(240, 240, 241, 0.5);
-	/* code to center placeholder text*/
 }
 
 .js-address.results::placeholder {
@@ -114,20 +111,17 @@ h1, .home-text, form {
   text-align: center;
 }
 
-/*search form on results page*/
 .js-address.results {
-  font-family: 'Karla', sans-serif;
+	font-family: 'Karla', sans-serif;
 	font-weight: 400;
-  display: inline-block;
-  border: 0;
-  outline: 0;
-  background: transparent;
-  border-bottom: 1px solid black;
+	display: inline-block;
+	border: 0;
+	outline: 0;
+	background: transparent;
+	border-bottom: 1px solid black;
 	height: 100%;
 	width: 100%;
 	vertical-align: top;
-
-	/*styling for input text*/
 	font-family: 'Karla', sans-serif;
 	font-weight: 400;
 	font-size: 3em;
@@ -145,11 +139,6 @@ h1, .home-text, form {
   align-items: flex-end;
 }
 
-main {
-
-  box-sizing: border-box;
-}
-
 .page-top {
   width: 100%;
   display: inline-flex;
@@ -157,19 +146,19 @@ main {
   margin: 2em 0;
 }
 
-
 .citystate-container {
   font-family: 'Montserrat', sans-serif;
   font-weight: 400;
-  font-size: 0.5em;
+  font-size: 1em;
   text-transform: uppercase;
 }
 
 .weather-container {
   font-family: 'Montserrat', sans-serif;
   font-weight: 800;
-  font-size: 1.9em
-  }
+  font-size: 1.9em;
+  margin-bottom: 0.2em;
+}
 
 .results-header {
   font-family: 'Karla', sans-serif;
@@ -180,6 +169,7 @@ main {
   letter-spacing: 1.5px;
   line-height: 1.2 em;
 }
+
 .search-results {
   text-align: center;
 }
@@ -190,20 +180,21 @@ main {
 }
 
 .listing {
-  margin-bottom: 1em;
+  margin-bottom: 2em;
   text-align: center;
   cursor: pointer;
 }
 
 .place-name {
   font-weight: 800;
-  font-size: 1.1em;
-  line-height: 1.3em;
+  font-size: 1.4em;
+  line-height: 1.5em;
+  letter-spacing: 1px;
 }
 
 .place-address {
   font-weight: 400;
-  font-size: 0.95em;
+  font-size: 1.3em;
 }
 
 .hidden-submit {
@@ -212,18 +203,12 @@ main {
 
 @media screen and (min-width: 696px) {
   
-  body {
+	body {
   	margin: -2em 0px auto;
-  }
+	}
 
-.home-text {
+	.home-text {
 	font-size: 2.1em;
   letter-spacing: 4px;
-}
-
-
-@media screen and (min-width: 1024px) {
-
-
-}
+	}
 
